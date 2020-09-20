@@ -143,7 +143,7 @@ public class SimpleArrayList {
         return mainString + "]";
     }
     private String[] populateTempArray(String [] mainArr){
-        //param is mainArray
+        //parameter is mainArray
         String [] tempArray;
         //tempArray is an array that has an array length that is oe greater than the length of mainArray
         tempArray=new String[lastIndex+2];
