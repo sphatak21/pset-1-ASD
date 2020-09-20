@@ -1,30 +1,37 @@
 import java.util.List;
 public class SimpleArrayList {
+    //lastIndex is the logical end of the Array
     int lastIndex=-1;
+    //mainArray is the array located within the SimpleArrayList object
     String[] mainArray;
     public SimpleArrayList() {
+        //Default Constructor
         mainArray=new String[0];
     }
     public SimpleArrayList(int initialCapacity){
+        //Initial Capacity Constructor
         if (initialCapacity<0){
             throw new IllegalArgumentException("Illegal Capacity: -1");
         }
         mainArray = new String[initialCapacity];
     }
     public SimpleArrayList(List<String> list){
+        //List -> Array Constructor
         mainArray = new String[list.size()];
         mainArray = list.toArray(mainArray);
         lastIndex= mainArray.length-1;
     }
     public void add(int index, String s){
+
         if(index<0 || index>lastIndex+1){
             throw new IndexOutOfBoundsException("Index: "+index+", Size: "+String.valueOf(lastIndex+1));
         }
+        //initialize tempArray
         String[] tempArray;
+        //populate tempArray
         tempArray=populateTempArray(mainArray);
-        //TODO: optimize lastIndex
+        //Add essentially increases the index of every single value starting from the given index, then inserts the String at the given index
         String replacingTemp = tempArray[index];
-
         for(int i=index; i<=lastIndex; i++){
             String replacedTemp = tempArray[i+1];
             tempArray[i+1]=replacingTemp;
@@ -35,6 +42,7 @@ public class SimpleArrayList {
         lastIndex++;
     }
     public void add(String s){
+        //adds String to end of array
         String[] tempArray;
         tempArray=populateTempArray(mainArray);
         tempArray[lastIndex+1]=s;
@@ -66,9 +74,11 @@ public class SimpleArrayList {
                 return i;
             }
         }
+        //if string is not found, returns -1
         return -1;
     }
     public boolean isEmpty(){
+        //lastIndex being less than zero means that the length of the array is zero
         if(lastIndex<0){
             return true;
         }
@@ -81,6 +91,8 @@ public class SimpleArrayList {
             throw new IndexOutOfBoundsException("Index "+index+" out of bounds for length " + String.valueOf(lastIndex+1));
         }
         String returnString=mainArray[index];
+        //Starting from Index + 1, for loop reduces the index of each element by one
+        //lastIndex is reduced by one because the logical length of the array is reduced by one
         for(int i=index+1; i < lastIndex+1; i++){
             mainArray[i-1] = mainArray[i];
         }
@@ -88,10 +100,12 @@ public class SimpleArrayList {
         return returnString;
     }
     public boolean remove(String s){
+        //checks first to see whether the string is in the array or not
         if(indexOf(s)==-1){
             return false;
         }
         int index = indexOf(s);
+        //starting from the index found from indexOf, for loop does the same as for loop in remove(int index)
         for(int j=index+1; j < lastIndex+1; j++) {
             mainArray[j-1] = mainArray[j];
         }
@@ -129,17 +143,15 @@ public class SimpleArrayList {
         return mainString + "]";
     }
     private String[] populateTempArray(String [] mainArr){
+        //param is mainArray
         String [] tempArray;
-        if(lastIndex==-1){
-            tempArray=new String[1];
-        }
-        else {
-            tempArray=new String[lastIndex+2];
-        }
+        //tempArray is an array that has an array length that is oe greater than the length of mainArray
+        tempArray=new String[lastIndex+2];
+        //for loop populates tempArray with mainArray
         for(int i=0; i<=lastIndex;i++){
             tempArray[i]=mainArr[i];
         }
         return tempArray;
     }
 }
-//We Done
+
